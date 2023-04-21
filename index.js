@@ -26,14 +26,17 @@ client.on("ready", () => {
 client.on("message", async (msg) => {
   if (msg.body === "!ping") {
     msg.reply("pong");
+
   } else if (msg.body === "hi" || msg.body === "hello" || msg.body === "halo") {
     client.sendMessage(msg.from, "Untuk list command ketik !command");
+
   } else if (msg.body === "!command") {
     msg.reply(`*Command List*
     1. !ping
     2. !ask 
-    3. !audiosumm (with audio file attachment)
+    3. !mediainfo (with audio file attachment)
     4. (In progress...)`);
+
   } else if (msg.body.startsWith("!ask ")) {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -42,7 +45,8 @@ client.on("message", async (msg) => {
       temperature: 0,
     });
     msg.reply(completion.data.choices[0].message.content);
-  } else if (msg.body === "!audiosumm" && msg.hasMedia) {
+    
+  } else if (msg.body === "!mediainfo" && msg.hasMedia) {
     const attachmentData = await msg.downloadMedia();
 
     msg.reply(`
